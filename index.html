@@ -4,250 +4,635 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>服装采购从新手到专家 - 课程报名</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: white;
+            overflow-x: hidden;
         }
-        .gradient-text {
-            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+
+        /* 动态背景粒子 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
-        .card {
-            background: rgba(255, 255, 255, 0.1);
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-100vh) rotate(720deg); opacity: 0.8; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 头部区域 */
+        .hero-section {
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #667eea; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #764ba2, 0 0 40px #764ba2; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+        }
+
+        /* 特色卡片区域 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInUp 1s ease-out;
+            animation-fill-mode: both;
         }
+
+        .feature-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-card:nth-child(2) { animation-delay: 0.4s; }
+        .feature-card:nth-child(3) { animation-delay: 0.6s; }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+
+        /* 服务介绍区域 */
+        .services-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 60px;
+            margin: 60px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb);
+            border-radius: 2px;
+        }
+
+        .service-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .service-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .service-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        /* 数字统计区域 */
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 60px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #feca57;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-top: 10px;
+        }
+
+        /* 收款码区域 */
+        .payment-section {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border-radius: 30px;
+            padding: 60px;
+            margin: 60px 0;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .payment-title {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .payment-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .payment-codes {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
         .payment-card {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
-            border: 2px solid #48dbfb;
-            border-radius: 16px;
-            padding: 32px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            width: 280px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .payment-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .payment-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .payment-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .qr-code-img {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 3px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .qr-code-img:hover {
+            transform: scale(1.05);
+            border-color: #667eea;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .payment-tip {
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* 联系方式区域 */
+        .contact-section {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 60px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.2);
+            padding: 20px 40px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-item:hover {
+            background: rgba(255,255,255,0.35);
+            transform: scale(1.05);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        /* 滚动提示按钮 */
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer a {
+            color: #feca57;
+            text-decoration: none;
+        }
+
+        /* 滚动动画 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-section,
+            .payment-section,
+            .contact-section {
+                padding: 40px 20px;
+            }
+
+            .payment-codes {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
-<body class="p-8">
-    <!-- 头部 -->
-    <div class="text-center mb-12">
-        <h1 class="text-5xl font-bold mb-6">
-            <span class="gradient-text">服装采购从新手到专家</span>
-        </h1>
-        <p class="text-2xl text-purple-200 mb-4">掌握核心技能，提升职业竞争力</p>
-        <p class="text-xl text-yellow-400 font-bold">限时优惠 ¥299（原价¥499）</p>
-    </div>
+<body>
+    <!-- 动态背景粒子 -->
+    <div class="particles" id="particles"></div>
 
-    <!-- 课程亮点 -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <div class="card">
-            <div class="text-4xl font-bold text-yellow-400 mb-4">8</div>
-            <h3 class="text-xl font-bold mb-2">核心模块</h3>
-            <p class="text-purple-200">从指标体系到供应商管理</p>
-        </div>
-        
-        <div class="card">
-            <div class="text-4xl font-bold text-green-400 mb-4">10+</div>
-            <h3 class="text-xl font-bold mb-2">实战案例</h3>
-            <p class="text-purple-200">真实采购场景分析</p>
-        </div>
-        
-        <div class="card">
-            <div class="text-4xl font-bold text-blue-400 mb-4">5</div>
-            <h3 class="text-xl font-bold mb-2">工具模板</h3>
-            <p class="text-purple-200">即学即用的Excel工具</p>
-        </div>
-    </div>
+    <div class="container">
+        <!-- 头部英雄区域 -->
+        <section class="hero-section">
+            <h1 class="hero-title">服装采购从新手到专家</h1>
+            <p class="hero-subtitle">10年服装采购管理经验，手把手教你成为采购专家</p>
+            <a href="#payment" class="cta-button">立即报名 ¥299 →</a>
+        </section>
 
-    <!-- 课程大纲 -->
-    <div class="card mb-12">
-        <h2 class="text-2xl font-bold mb-6 text-center">课程大纲</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center mr-3">1</div>
-                <span>采购核心指标体系</span>
+        <!-- 特色优势 -->
+        <section class="features-grid">
+            <div class="feature-card scroll-animate">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">10年实战经验</h3>
+                <p class="feature-desc">从月薪5000到采购总监，10年服装采购管理经验倾囊相授</p>
             </div>
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center mr-3">2</div>
-                <span>科学选款与价格带规划</span>
+            <div class="feature-card scroll-animate">
+                <div class="feature-icon">💎</div>
+                <h3 class="feature-title">即学即用工具</h3>
+                <p class="feature-desc">5个Excel工具模板+PPT课件+课程视频，学完就能用</p>
             </div>
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center mr-3">3</div>
-                <span>库存管理与周转优化</span>
+            <div class="feature-card scroll-animate">
+                <div class="feature-icon">🤝</div>
+                <h3 class="feature-title">一对一指导</h3>
+                <p class="feature-desc">微信随时提问，专业导师一对一解答，包教包会</p>
             </div>
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center mr-3">4</div>
-                <span>销售数据分析实战</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center mr-3">5</div>
-                <span>陈列与促销策划</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center mr-3">6</div>
-                <span>AI赋能采购管理</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center mr-3">7</div>
-                <span>供应商管理与谈判</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-purple-400 rounded-full flex items-center justify-center mr-3">8</div>
-                <span>课程总结与行动清单</span>
-            </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- 支付区域 -->
-    <div class="payment-card mb-12">
-        <h2 class="text-2xl font-bold mb-6 text-center">立即报名</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- 支付宝支付 -->
-            <div class="text-center">
-                <h3 class="text-xl font-bold mb-4 text-yellow-400">支付宝支付</h3>
-                <div class="bg-white rounded-lg p-4 inline-block mb-4">
-                    <div class="w-48 h-48 bg-gray-100 flex items-center justify-center border-2 border-dashed border-gray-300">
-                        <div class="text-center">
-                            <div class="text-2xl mb-2">📱</div>
-                            <div class="text-gray-600 font-bold">支付宝转账</div>
-                            <div class="text-sm text-gray-500 mt-2">账号：15353725088</div>
-                            <div class="text-sm text-gray-500">金额：¥299</div>
-                            <div class="text-sm text-gray-500">备注：姓名+手机号</div>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-purple-200 mb-2">支付宝账号：15353725088</p>
-                <p class="text-sm text-purple-300">转账时请备注：姓名+手机号</p>
+        <!-- 服务项目 -->
+        <section class="services-section scroll-animate">
+            <h2 class="section-title">课程内容</h2>
+            <div class="service-list">
+                <span class="service-item">📊 销售数据分析</span>
+                <span class="service-item">📦 库存管理优化</span>
+                <span class="service-item">💰 采购成本控制</span>
+                <span class="service-item">🎯 选品策略制定</span>
+                <span class="service-item">📈 毛利率提升</span>
+                <span class="service-item">🔄 补货流程优化</span>
+                <span class="service-item">📋 供应商管理</span>
+                <span class="service-item">🚀 采购职业发展</span>
             </div>
+        </section>
+
+        <!-- 数据统计 -->
+        <section class="stats-section scroll-animate">
+            <div class="stat-item">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">年采购经验</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">成功案例</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">学员好评</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24h</div>
+                <div class="stat-label">答疑响应</div>
+            </div>
+        </section>
+
+        <!-- 收款码区域 -->
+        <section id="payment" class="payment-section scroll-animate">
+            <h2 class="payment-title">💳 扫码报名</h2>
+            <p class="payment-subtitle">支持微信、支付宝扫码支付，安全便捷</p>
             
-            <!-- 微信支付 -->
-            <div class="text-center">
-                <h3 class="text-xl font-bold mb-4 text-green-400">微信支付</h3>
-                <div class="bg-white rounded-lg p-4 inline-block mb-4">
-                    <div class="w-48 h-48 bg-gray-100 flex items-center justify-center border-2 border-dashed border-gray-300">
-                        <div class="text-center">
-                            <div class="text-2xl mb-2">💬</div>
-                            <div class="text-gray-600 font-bold">微信转账</div>
-                            <div class="text-sm text-gray-500 mt-2">微信号：xavip8888</div>
-                            <div class="text-sm text-gray-500">金额：¥299</div>
-                            <div class="text-sm text-gray-500">备注：姓名+手机号</div>
-                        </div>
+            <div class="payment-codes">
+                <!-- 微信收款码 -->
+                <div class="payment-card">
+                    <div class="payment-icon">💚</div>
+                    <h3 class="payment-name">微信支付</h3>
+                    <img src="https://15353725088.github.io/微信收款码.png" alt="微信收款码" class="qr-code-img" 
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="qr-placeholder" style="display:none;">
+                        微信收款码<br>加载失败
                     </div>
-                </div>
-                <p class="text-purple-200 mb-2">微信号：xavip8888</p>
-                <p class="text-sm text-purple-300">转账时请备注：姓名+手机号</p>
-            </div>
-        </div>
-        
-        <div class="text-center mt-8">
-            <p class="text-lg text-yellow-400 mb-4">支付完成后，请截图并添加微信：xavip8888</p>
-            <p class="text-purple-200 mb-4">我会在1小时内发送课程资料给您</p>
-            
-            <div class="bg-white/10 rounded-lg p-6 mt-6">
-                <h4 class="text-lg font-bold text-yellow-400 mb-4">📦 课程资料包含</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                    <div class="flex items-center">
-                        <div class="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center mr-3">✓</div>
-                        <span>课程视频（3分44秒）</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center mr-3">✓</div>
-                        <span>PPT课件（16页）</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center mr-3">✓</div>
-                        <span>5个Excel工具模板</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center mr-3">✓</div>
-                        <span>采购入门指南PDF</span>
-                    </div>
+                    <p class="payment-tip">长按识别二维码</p>
                 </div>
                 
-                <div class="text-center mt-6">
-                    <a href="https://github.com/15353725088/15353725088.github.io/releases/download/v1.0/服装采购课程资料.zip" 
-                       class="inline-block bg-gradient-to-r from-green-400 to-blue-400 text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity">
-                        📥 免费下载课程资料（试用版）
-                    </a>
-                    <p class="text-sm text-purple-300 mt-2">包含部分课程内容和工具模板</p>
+                <!-- 支付宝收款码 -->
+                <div class="payment-card">
+                    <div class="payment-icon">💙</div>
+                    <h3 class="payment-name">支付宝</h3>
+                    <img src="https://15353725088.github.io/支付宝收款码.png" alt="支付宝收款码" class="qr-code-img"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="qr-placeholder" style="display:none;">
+                        支付宝收款码<br>加载失败
+                    </div>
+                    <p class="payment-tip">长按识别二维码</p>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- 联系方式 -->
+        <section class="contact-section scroll-animate">
+            <h2 class="section-title">联系我们</h2>
+            <p style="color: rgba(255,255,255,0.8); font-size: 1.2rem;">
+                有任何问题，欢迎随时联系我们
+            </p>
+            <div class="contact-methods">
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-info">电话/微信：15353725088</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-info">邮箱：15353725088@qq.com</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-info">微信公众号</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>© 2026 服装采购课程 | <a href="https://15353725088.github.io">访问官网</a></p>
+            <p style="margin-top: 10px;">10年服装采购经验，助你成为采购专家 ❤️</p>
+        </footer>
     </div>
 
-    <!-- 讲师介绍 -->
-    <div class="card mb-12">
-        <h2 class="text-2xl font-bold mb-6 text-center">讲师介绍</h2>
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center mb-6 md:mb-0 md:mr-8">
-                <span class="text-4xl">👤</span>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold mb-2">曦哥（党曦）</h3>
-                <ul class="space-y-2 text-purple-200">
-                    <li>• 10年服装采购管理经验</li>
-                    <li>• 曾管理14家门店采购工作</li>
-                    <li>• 擅长数据驱动采购决策</li>
-                    <li>• 培训学员1200+人</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- 学员见证 -->
-    <div class="card mb-12">
-        <h2 class="text-2xl font-bold mb-6 text-center">学员见证</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white/10 rounded-lg p-4">
-                <p class="text-purple-200 mb-4">"学完课程，3个月就晋升采购主管了！"</p>
-                <p class="text-yellow-400 font-bold">- 学员A</p>
-            </div>
-            <div class="bg-white/10 rounded-lg p-4">
-                <p class="text-purple-200 mb-4">"毛利率提升了10%，库存周转快了一倍！"</p>
-                <p class="text-yellow-400 font-bold">- 学员B</p>
-            </div>
-            <div class="bg-white/10 rounded-lg p-4">
-                <p class="text-purple-200 mb-4">"工具模板太实用了，直接用就能出结果！"</p>
-                <p class="text-yellow-400 font-bold">- 学员C</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 常见问题 -->
-    <div class="card mb-12">
-        <h2 class="text-2xl font-bold mb-6 text-center">常见问题</h2>
-        <div class="space-y-4">
-            <div>
-                <h3 class="text-lg font-bold text-yellow-400 mb-2">Q: 课程适合什么人？</h3>
-                <p class="text-purple-200">A: 适合服装采购新人、零售管理者、想提升采购技能的人。</p>
-            </div>
-            <div>
-                <h3 class="text-lg font-bold text-yellow-400 mb-2">Q: 课程形式是什么？</h3>
-                <p class="text-purple-200">A: 录播视频+PPT课件+Excel工具模板+社群答疑。</p>
-            </div>
-            <div>
-                <h3 class="text-lg font-bold text-yellow-400 mb-2">Q: 支付后多久收到资料？</h3>
-                <p class="text-purple-200">A: 支付后1小时内发送课程资料到您的微信。</p>
-            </div>
-            <div>
-                <h3 class="text-lg font-bold text-yellow-400 mb-2">Q: 有售后服务吗？</h3>
-                <p class="text-purple-200">A: 有专属社群答疑，课程内容持续更新。</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 底部 -->
-    <div class="text-center text-purple-300 mt-12">
-        <p>服装采购从新手到专家 · 限时优惠 ¥299</p>
-        <p class="text-sm mt-2">前100名报名享8折优惠</p>
-        <p class="text-sm mt-2">联系方式：微信 xavip8888</p>
-    </div>
+    <script>
+        // 创建动态背景粒子
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 20 + 5;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // 滚动动画
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.scroll-animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(el => observer.observe(el));
+        }
+        
+        // 数字计数动画
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const text = counter.textContent;
+                const number = parseInt(text);
+                
+                if (isNaN(number)) return;
+                
+                const suffix = text.replace(/[0-9]/g, '');
+                let current = 0;
+                const increment = number / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= number) {
+                        counter.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + suffix;
+                    }
+                }, 30);
+            });
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            handleScrollAnimations();
+            
+            // 延迟启动计数动画
+            setTimeout(animateCounters, 500);
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
